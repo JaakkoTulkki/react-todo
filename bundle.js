@@ -21499,7 +21499,7 @@
 	    _createClass(TodoPage, [{
 	        key: 'render',
 	        value: function render() {
-	            var notes = ["kommentti"];
+	            var notes = [];
 	            return _react2.default.createElement(
 	                'div',
 	                null,
