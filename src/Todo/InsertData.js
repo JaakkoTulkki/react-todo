@@ -2,12 +2,11 @@ import React, {PropTypes} from 'react';
 import {ListData} from './ListData';
 
 export class InsertData extends React.Component{
-    constructor(notes){
-        super(notes);
-        this.state = {notes};
+    constructor(props){
+        super(props);
+        this.state = {notes: this.props.notes};
 
         this.onSubmit = this.onSubmit.bind(this);
-        console.log(this.state);
     }
 
     onSubmit(e){
@@ -23,9 +22,9 @@ export class InsertData extends React.Component{
                         Insert your note: <input type="text" name="note"/>
                         <input type="submit" value="Submit" />
                     </form>
-                </div>
-                <div>
-                    {this.props.children}
+                    <div>
+                        <ListData notes={this.state.notes}/>
+                    </div>
                 </div>
             </div>
         );

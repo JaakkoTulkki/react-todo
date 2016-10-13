@@ -165,6 +165,8 @@
 /* 3 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	// shim for using process in browser
 	var process = module.exports = {};
 
@@ -21477,8 +21479,6 @@
 
 	var _InsertData = __webpack_require__(173);
 
-	var _ListData = __webpack_require__(174);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21508,12 +21508,7 @@
 	                    null,
 	                    'Todo App'
 	                ),
-	                _react2.default.createElement(
-	                    _InsertData.InsertData,
-	                    { notes: notes },
-	                    ' ',
-	                    _react2.default.createElement(_ListData.ListData, { notes: notes })
-	                )
+	                _react2.default.createElement(_InsertData.InsertData, { notes: notes })
 	            );
 	        }
 	    }]);
@@ -21553,15 +21548,14 @@
 	var InsertData = exports.InsertData = function (_React$Component) {
 	    _inherits(InsertData, _React$Component);
 
-	    function InsertData(notes) {
+	    function InsertData(props) {
 	        _classCallCheck(this, InsertData);
 
-	        var _this = _possibleConstructorReturn(this, (InsertData.__proto__ || Object.getPrototypeOf(InsertData)).call(this, notes));
+	        var _this = _possibleConstructorReturn(this, (InsertData.__proto__ || Object.getPrototypeOf(InsertData)).call(this, props));
 
-	        _this.state = { notes: notes };
+	        _this.state = { notes: _this.props.notes };
 
 	        _this.onSubmit = _this.onSubmit.bind(_this);
-	        console.log(_this.state);
 	        return _this;
 	    }
 
@@ -21586,12 +21580,12 @@
 	                        'Insert your note: ',
 	                        _react2.default.createElement('input', { type: 'text', name: 'note' }),
 	                        _react2.default.createElement('input', { type: 'submit', value: 'Submit' })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        _react2.default.createElement(_ListData.ListData, { notes: this.state.notes })
 	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    null,
-	                    this.props.children
 	                )
 	            );
 	        }
@@ -21604,7 +21598,7 @@
 /* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -21628,26 +21622,21 @@
 	var ListData = exports.ListData = function (_React$Component) {
 	    _inherits(ListData, _React$Component);
 
-	    function ListData(notes) {
+	    function ListData(props) {
 	        _classCallCheck(this, ListData);
 
-	        var _this = _possibleConstructorReturn(this, (ListData.__proto__ || Object.getPrototypeOf(ListData)).call(this, notes));
-
-	        _this.state = { notes: notes.notes };
-	        console.log("ListData");
-	        console.log(_this.state);
-	        return _this;
+	        return _possibleConstructorReturn(this, (ListData.__proto__ || Object.getPrototypeOf(ListData)).call(this, props));
 	    }
 
 	    _createClass(ListData, [{
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                "ul",
+	                'ul',
 	                null,
-	                this.state.notes.map(function (note, key) {
+	                this.props.notes.map(function (note, key) {
 	                    return _react2.default.createElement(
-	                        "li",
+	                        'li',
 	                        { key: key },
 	                        note
 	                    );
