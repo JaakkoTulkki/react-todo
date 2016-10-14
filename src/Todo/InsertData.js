@@ -1,17 +1,23 @@
 import React, {PropTypes} from 'react';
-import {ListData} from './ListData';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import ListData from './ListData';
+import * as appActions from '../actions/actions';
 
 export class InsertData extends React.Component{
     constructor(props){
         super(props);
-        this.state = {notes: this.props.notes};
-
         this.onSubmit = this.onSubmit.bind(this);
     }
 
     onSubmit(e){
         e.preventDefault();
-        this.setState({notes: [...this.state.notes, e.target.note.value]});
+        console.log("in onsubmit");
+        console.log(e.target.note);
+        console.log(this.props);
+        console.log("end of props in onsbumit");
+        this.props.actions.dispatchNote(e.target.note.value);
+        // this.setState({notes: [...this.props.notes, e.target.note.value]});
     }
 
     render() {
@@ -23,11 +29,24 @@ export class InsertData extends React.Component{
                         <input type="submit" value="Submit" />
                     </form>
                     <div>
-                        <ListData notes={this.state.notes}/>
+                        <ListData/>
                     </div>
                 </div>
             </div>
         );
     }
-
 }
+
+const mapStateToProps = (state)=>{
+    return {
+        notes: state.notes
+    };
+};
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(appActions, dispatch)//course => dispatch(courseActions.createCourse(course))
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InsertData);

@@ -1,16 +1,22 @@
 import React, {PropTypes} from 'react';
-import {InsertData} from './InsertData';
+import {connect} from 'react-redux';
+import InsertData from './InsertData';
 
-export class TodoPage extends React.Component{
+class TodoPage extends React.Component{
     render(){
-        const notes = [];
         return (
             <div>
                 <h1>Todo App</h1>
-                <InsertData notes={notes}/>
+                <InsertData/>
             </div>
         );
     }
-
 }
 
+const mapStateToProps = (state)=>{
+    return {
+        notes: state.notes
+    };
+};
+
+export default connect(mapStateToProps)(TodoPage);

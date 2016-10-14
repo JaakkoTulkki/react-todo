@@ -1,8 +1,17 @@
 import React from 'react';
+import {createStore} from "redux";
 import {render} from 'react-dom';
-import {TodoPage} from './src/Todo/TodoPage'
+import {Provider} from 'react-redux';
+
+import rootReducer from './src/reducers/rootReducer';
+import TodoPage from './src/Todo/TodoPage'
+
+
+const store = createStore(rootReducer());
 
 render(
-    <TodoPage/>,
+    <Provider store={store}>
+        <TodoPage/>
+    </Provider>,
     document.getElementById('app')
 );

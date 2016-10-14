@@ -1,10 +1,7 @@
 import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 
 export class ListData extends React.Component{
-    constructor(props){
-        super(props);
-    }
-
     render(){
         return (
             <ul>
@@ -15,3 +12,11 @@ export class ListData extends React.Component{
         );
     }
 }
+
+const mapStateToProps = (state) =>{
+    return {
+        notes: state.notes
+    };
+};
+
+export default connect(mapStateToProps)(ListData);
