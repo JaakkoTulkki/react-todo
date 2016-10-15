@@ -23317,6 +23317,10 @@
 	    if (action.type == 'NOTE') {
 	        return [].concat(_toConsumableArray(state), [action.note]);
 	    }
+	    if (action.type == "DELETE_ITEM") {
+	        state.splice(parseInt(action.index), 1);
+	        return Object.assign([], state);
+	    }
 	    return state;
 	}
 
@@ -23448,10 +23452,6 @@
 	        key: 'onSubmit',
 	        value: function onSubmit(e) {
 	            e.preventDefault();
-	            console.log("in onsubmit");
-	            console.log(e.target.note);
-	            console.log(this.props);
-	            console.log("end of props in onsbumit");
 	            this.props.actions.dispatchNote(e.target.note.value);
 	            // this.setState({notes: [...this.props.notes, e.target.note.value]});
 	        }
@@ -23517,6 +23517,8 @@
 
 	var _reactRedux = __webpack_require__(187);
 
+	var _redux = __webpack_require__(34);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -23528,15 +23530,31 @@
 	var ListData = exports.ListData = function (_React$Component) {
 	    _inherits(ListData, _React$Component);
 
-	    function ListData() {
+	    function ListData(props) {
 	        _classCallCheck(this, ListData);
 
-	        return _possibleConstructorReturn(this, (ListData.__proto__ || Object.getPrototypeOf(ListData)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (ListData.__proto__ || Object.getPrototypeOf(ListData)).call(this, props));
+
+	        _this.onClick = _this.onClick.bind(_this);
+	        return _this;
 	    }
 
 	    _createClass(ListData, [{
+	        key: 'onClick',
+	        value: function onClick(e) {
+	            console.log('list data on click');
+	            e.preventDefault();
+	            console.log(e);
+	            var index = e.target.value;
+	            console.log(index);
+	            console.log(this.props);
+	            this.props.actions(index);
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
+
 	            return _react2.default.createElement(
 	                'ul',
 	                null,
@@ -23544,7 +23562,13 @@
 	                    return _react2.default.createElement(
 	                        'li',
 	                        { key: key },
-	                        note
+	                        note,
+	                        ' | ',
+	                        _react2.default.createElement(
+	                            'button',
+	                            { onClick: _this2.onClick, type: 'button', value: key },
+	                            'delete'
+	                        )
 	                    );
 	                })
 	            );
@@ -23560,7 +23584,20 @@
 	    };
 	};
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(ListData);
+	function deleteListItem(index) {
+	    return {
+	        type: 'DELETE_ITEM',
+	        index: index
+	    };
+	}
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	    return {
+	        actions: (0, _redux.bindActionCreators)(deleteListItem, dispatch)
+	    };
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ListData);
 
 /***/ },
 /* 204 */

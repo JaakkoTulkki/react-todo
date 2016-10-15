@@ -11,8 +11,13 @@ function noteReducer(state=['initial commit'], action) {
     if(action.type == 'NOTE'){
         return [...state, action.note];
     }
+    if(action.type == "DELETE_ITEM"){
+        state.splice(parseInt(action.index), 1);
+        return Object.assign([], state);
+    }
     return state;
 }
+
 
 export default function rootReducer() {
     return combineReducers({

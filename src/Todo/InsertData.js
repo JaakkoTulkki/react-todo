@@ -12,10 +12,6 @@ export class InsertData extends React.Component{
 
     onSubmit(e){
         e.preventDefault();
-        console.log("in onsubmit");
-        console.log(e.target.note);
-        console.log(this.props);
-        console.log("end of props in onsbumit");
         this.props.actions.dispatchNote(e.target.note.value);
         // this.setState({notes: [...this.props.notes, e.target.note.value]});
     }
