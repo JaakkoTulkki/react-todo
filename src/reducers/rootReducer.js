@@ -17,12 +17,19 @@ function noteReducer(state=['initial commit'], action) {
     }
     return state;
 }
+function textInputReducer(state='', action) {
+    if(action.type=='TEXT_INPUT'){
+        return action.text_input
+    }
+    return state;
+}
 
 
 export default function rootReducer() {
     return combineReducers({
         hello: helloWorldReducer,
-        notes: noteReducer
+        notes: noteReducer,
+        textInput: textInputReducer,
     });
 }
 

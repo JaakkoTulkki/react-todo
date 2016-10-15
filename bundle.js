@@ -23323,11 +23323,21 @@
 	    }
 	    return state;
 	}
+	function textInputReducer() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+	    var action = arguments[1];
+
+	    if (action.type == 'TEXT_INPUT') {
+	        return action.text_input;
+	    }
+	    return state;
+	}
 
 	function rootReducer() {
 	    return (0, _redux.combineReducers)({
 	        hello: helloWorldReducer,
-	        notes: noteReducer
+	        notes: noteReducer,
+	        textInput: textInputReducer
 	    });
 	}
 
@@ -23445,6 +23455,7 @@
 	        var _this = _possibleConstructorReturn(this, (InsertData.__proto__ || Object.getPrototypeOf(InsertData)).call(this, props));
 
 	        _this.onSubmit = _this.onSubmit.bind(_this);
+	        _this.onChange = _this.onChange.bind(_this);
 	        return _this;
 	    }
 
@@ -23453,7 +23464,13 @@
 	        value: function onSubmit(e) {
 	            e.preventDefault();
 	            this.props.actions.dispatchNote(e.target.note.value);
-	            // this.setState({notes: [...this.props.notes, e.target.note.value]});
+	            this.props.actions.updateNoteInput('');
+	        }
+	    }, {
+	        key: 'onChange',
+	        value: function onChange(e) {
+	            e.preventDefault();
+	            this.props.actions.updateNoteInput(e.target.value);
 	        }
 	    }, {
 	        key: 'render',
@@ -23468,7 +23485,7 @@
 	                        'form',
 	                        { onSubmit: this.onSubmit },
 	                        'Insert your note: ',
-	                        _react2.default.createElement('input', { type: 'text', name: 'note' }),
+	                        _react2.default.createElement('input', { type: 'text', name: 'note', value: this.props.textInput, onChange: this.onChange }),
 	                        _react2.default.createElement('input', { type: 'submit', value: 'Submit' })
 	                    ),
 	                    _react2.default.createElement(
@@ -23486,7 +23503,8 @@
 
 	var mapStateToProps = function mapStateToProps(state) {
 	    return {
-	        notes: state.notes
+	        notes: state.notes,
+	        textInput: state.textInput
 	    };
 	};
 
@@ -23609,10 +23627,18 @@
 	    value: true
 	});
 	exports.dispatchNote = dispatchNote;
+	exports.updateNoteInput = updateNoteInput;
 	function dispatchNote(note) {
 	    return {
 	        type: "NOTE",
 	        note: note
+	    };
+	}
+
+	function updateNoteInput(text_input) {
+	    return {
+	        type: "TEXT_INPUT",
+	        text_input: text_input
 	    };
 	}
 

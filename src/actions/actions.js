@@ -4,3 +4,10 @@ export function dispatchNote(note) {
         note
     };
 }
+
+export function updateNoteInput(text_input) {
+    return {
+        type: "TEXT_INPUT",
+        text_input: text_input,
+    }
+}

@@ -8,12 +8,18 @@ export class InsertData extends React.Component{
     constructor(props){
         super(props);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onChange = this.onChange.bind(this);
     }
 
     onSubmit(e){
         e.preventDefault();
         this.props.actions.dispatchNote(e.target.note.value);
-        // this.setState({notes: [...this.props.notes, e.target.note.value]});
+        this.props.actions.updateNoteInput('');
+    }
+
+    onChange(e){
+        e.preventDefault();
+        this.props.actions.updateNoteInput(e.target.value);
     }
 
     render() {
@@ -21,7 +27,7 @@ export class InsertData extends React.Component{
             <div>
                 <div>
                     <form onSubmit={this.onSubmit}>
-                        Insert your note: <input type="text" name="note"/>
+                        Insert your note: <input type="text" name="note" value={this.props.textInput} onChange={this.onChange}/>
                         <input type="submit" value="Submit" />
                     </form>
                     <div>
@@ -35,7 +41,8 @@ export class InsertData extends React.Component{
 
 const mapStateToProps = (state)=>{
     return {
-        notes: state.notes
+        notes: state.notes,
+        textInput: state.textInput,
     };
 };
 
